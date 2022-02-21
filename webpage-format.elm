@@ -6,6 +6,7 @@ import Element.Background as Background
 import Element.Border as Border
 import Element.Events as Events
 import Element.Font as Font
+import Element.Input as Input
 import Element.Region as Region
 import Html exposing (Html)
 import Html.Attributes
@@ -135,20 +136,20 @@ dropDown model =
         , alignRight
         , Background.color (rgb255 255 240 245)
         ]
-        [ el
+        [ Input.button
             [ width fill
             , paddingXY 10 10
-            , Events.onClick <| SelMode (Background.color (rgb255 255 240 245))
+            , Background.color (rgb255 255 240 245)
+            , Font.color (rgb255 51 51 0)
             ]
-          <|
-            text "White"
-        , el
+            { label = text "White", onPress = Just (SelMode (Background.color (rgb255 255 240 245))) }
+        , Input.button
             [ width fill
             , paddingXY 10 10
-            , Events.onClick <| SelMode (Background.color (rgb255 51 51 0))
+            , Background.color (rgb255 51 51 0)
+            , Font.color (rgb255 255 240 245)
             ]
-          <|
-            text "Drak"
+            { label = text "Drak", onPress = Just (SelMode (Background.color (rgb255 51 51 0))) }
         ]
 
 
@@ -167,28 +168,31 @@ header model =
             , alignTop
             ]
             [ el
-                [ Font.color <| rgba 0 0 0 0.4
+                [ Font.color (rgba 0 0 0 0.4)
                 , Font.bold
                 , alignLeft
                 ]
                 (text "Header")
-            , el [ alignRight, Events.onClick ToTop ] <| text "Top"
-            , el [ Events.onClick ToAbout ] <| text "About"
-            , el
+            , Input.button
+                [ alignRight ]
+                { label = text "Top", onPress = Just ToTop }
+            , Input.button
+                []
+                { label = text "About", onPress = Just ToAbout }
+            , Input.button
                 ([]
                     ++ (case model.dropDown1Config.state of
                             Closed ->
-                                [ Events.onClick <| SetState Open
+                                [ Events.onClick (SetState Open)
                                 ]
 
                             Open ->
                                 [ below <| dropDown model
-                                , Events.onClick <| SetState Closed
+                                , Events.onClick (SetState Closed)
                                 ]
                        )
                 )
-              <|
-                text "Mode"
+                { label = text "Mode", onPress = Nothing }
             ]
         ]
 
@@ -199,7 +203,7 @@ footer =
         [ width fill
         , padding 10
         , height (px 70)
-        , Font.color <| rgba 0 0 0 0.4
+        , Font.color (rgba 0 0 0 0.4)
         , Font.bold
         , Background.color (rgb255 255 182 193)
         ]
