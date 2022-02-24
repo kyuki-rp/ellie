@@ -3,7 +3,7 @@ module Main exposing (main)
 import Browser
 import Element.Input as Input
 import Html exposing (Html, button, div, input, text)
-import Html.Attributes exposing (style, type_)
+import Html.Attributes exposing (style)
 import Html.Events exposing (onClick)
 import Regex
 
@@ -100,18 +100,29 @@ toFloat value =
 
 eval : String -> String
 eval model =
-    model
-        |> String.replace "-" "+-"
-        |> String.replace "^+" "^"
-        |> divReplace
-        |> String.split "+"
-        |> List.map (String.split "*")
-        |> List.map (List.map (String.split "^"))
-        |> List.map (List.map (List.map toFloat))
-        |> List.map (List.map power)
-        |> List.map multiple
-        |> sum
-        |> String.fromFloat
+    if
+        let
+            digit =
+                Maybe.withDefault Regex.never <|
+                    Regex.fromString "[a-zA-Z]"
+        in
+        Regex.contains digit model
+    then
+        "NaN"
+
+    else
+        model
+            |> String.replace "-" "+-"
+            |> String.replace "^+" "^"
+            |> divReplace
+            |> String.split "+"
+            |> List.map (String.split "*")
+            |> List.map (List.map (String.split "^"))
+            |> List.map (List.map (List.map toFloat))
+            |> List.map (List.map power)
+            |> List.map multiple
+            |> sum
+            |> String.fromFloat
 
 
 view : Model -> Html Msg
