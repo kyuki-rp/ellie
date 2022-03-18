@@ -75,7 +75,7 @@ main =
 
 view : Computer -> Memory -> List Shape
 view computer memory =
-    List.map (\element -> element |> move (computer.screen.left + 300)  (computer.screen.bottom + 200)) (
+    List.map (\element -> element |> move (computer.screen.left + 100)  (computer.screen.bottom + 50)) (
         List.map
             (\enemy ->
                 image enemy.w enemy.h ("img/" ++ enemy.img ++ ".png")
@@ -95,7 +95,7 @@ view computer memory =
         ]
     )
     ++ [ rectangle (rgb 154 205 50) computer.screen.width 10
-        |> moveY (computer.screen.bottom + 200)
+        |> moveY (computer.screen.bottom + 50)
     , ( scale 5 <|
             words (rgb 221 160 221) <|
                 memory.colliding
