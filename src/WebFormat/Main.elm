@@ -202,14 +202,6 @@ about =
 top : List (Element msg)
 top =
     [ el [ centerX ] <| text "Top Page"
-    , image
-        [ Border.rounded 10
-        , Border.width 1
-        , width fill
-        ]
-        { src = "https://pages.middenii.com/static/f05aea1811889ccd474b872c9d97a730/47286/thanks.webp"
-        , description = "description..."
-        }
     , el [ Region.heading 1, Font.size 36 ] <| text "h1"
     , el [ Region.heading 2, Font.size 32 ] <| text "h2"
     , el [ Region.heading 3, Font.size 28 ] <| text "h3"
